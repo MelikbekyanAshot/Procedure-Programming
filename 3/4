@@ -1,0 +1,27 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+int main() {
+	setlocale(LC_ALL, "ru");
+	ofstream fout;
+	fout.open("myFile2.txt");
+	fout << "1йцук2жд3ждл5ждл6жд7лждл9ждл4//*{}[]|";
+	fout.close();
+
+	ifstream fin;
+	fin.open("myFile2.txt");
+	char ch;
+	while (fin.get(ch)) 
+	{
+			if (ch>=49 && ch<=57) 
+			{
+				cout << ch - '0' << endl;
+			}
+
+	}
+
+
+	return 0;
+}

@@ -1,0 +1,131 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int main()
+{
+	setlocale(LC_ALL, "rus");
+	double seller1_sold=0, seller2_sold=0, seller3_sold=0, seller1_com = 0, seller2_com = 0, seller3_com = 0, sold = 0;
+	int a[10][10];
+	double b[5][5];
+	int i, j;
+
+	a[1][1] = 5; a[1][2] = 2; a[1][3] = 0; a[1][4] = 10;
+	a[2][1] = 3; a[2][2] = 5; a[2][3] = 2; a[2][4] = 5;
+	a[3][1] = 20; a[3][2] = 0; a[3][3] = 0; a[3][4] = 0;
+	for (i = 1; i < 4; i++)
+	{
+		for (j = 1; j < 5; j++)
+		{
+			cout << a[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	cout << endl;
+
+	b[1][1] = 1.2; b[1][2] = 0.5;
+	b[2][1] = 2.8; b[2][2] = 0.4;
+	b[3][1] = 5; b[3][2] = 1;
+	b[4][1] = 2; b[4][2] = 1.5;
+	for (i = 1; i < 5; i++)
+	{
+		for (j = 1; j < 3; j++)
+		{
+			cout << b[i][j] << '\t';
+		}
+		cout << endl;
+	}
+	cout << endl;
+
+	// Считаем выручку и комиссию 1-ого продавца
+	for (j = 1; j < 5; j++)
+	{
+		seller1_sold = seller1_sold + a[1][j] * b[j][1];
+		seller1_com = seller1_com + a[1][j] * b[j][2];
+	}
+	// Считаем выручку и комиссию 2-ого продавца
+	for (j = 1; j < 5; j++)
+	{
+		seller2_sold = seller2_sold + a[2][j] * b[j][1];
+		seller2_com = seller2_com + a[2][j] * b[j][2];
+	}
+	// Считаем выручку и комиссию 3-его продавца
+	for (j = 1; j < 5; j++)
+	{
+		seller3_sold = seller3_sold + a[3][j] * b[j][1];
+		seller3_com = seller3_com + a[3][j] * b[j][2];
+	}
+
+	cout << "Выручки продавцов: ";
+	cout << seller1_sold << " " << seller2_sold << " " << seller3_sold << endl;
+
+	// TODO: написать адекватный поиск минимума и максимума из 3 элементов и вывод соответствующего продавца
+	// Ищем наибольшую выручку
+	if (seller1_sold > seller2_sold && seller1_sold > seller3_sold)
+	{
+		cout << "Наибольшая выручка у 1-ого продавца";
+	}
+	if (seller2_sold > seller1_sold && seller2_sold > seller3_sold)
+	{
+		cout << "Наибольшая выручка у 2-ого продавца";
+	}
+	if (seller3_sold > seller1_sold && seller3_sold > seller2_sold)
+	{
+		cout << "Наибольшая выручка у 3-его продавца";
+	}
+	cout << endl;
+
+	// Ищем наименьшую выручку               
+	if (seller1_sold < seller2_sold && seller1_sold < seller3_sold)
+	{
+		cout << "Наименьшая выручка у 1-ого продавца";
+	}
+	if (seller2_sold < seller1_sold && seller2_sold < seller3_sold)
+	{
+		cout << "Наименьшая выручка у 2-ого продавца";
+	}
+	if (seller3_sold < seller1_sold && seller3_sold < seller2_sold)
+	{
+		cout << "Наименьшая выручка у 3-его продавца";
+	}
+	cout << endl;	cout << endl;
+
+	
+	cout << "Комиссионные продавцов: ";
+	cout << seller1_com << " " << seller2_com << " " << seller3_com << endl;
+
+	// Ищем наибольшую комиссию
+	if (seller1_com > seller2_com && seller1_com > seller3_com)
+	{
+		cout << "Наибольшая комиссия у 1-ого продавца";
+	}
+	if (seller2_com > seller1_com && seller2_com > seller3_com)
+	{
+		cout << "Наибольшая комиссия у 2-ого продавца";
+	}
+	if (seller3_com > seller1_com && seller3_com > seller2_com)
+	{
+		cout << "Наибольшая комиссия у 3-его продавца";
+	}
+	cout << endl;
+
+	// Ищем наименьшую комиссию
+	if (seller1_com < seller2_com && seller1_com < seller3_com)
+	{
+		cout << "Наименьшая комиссия у 1-ого продавца";
+	}
+	if (seller2_com < seller1_com && seller2_com < seller3_com)
+	{
+		cout << "Наименьшая комиссия у 2-ого продавца";
+	}
+	if (seller3_com < seller1_com && seller3_com < seller2_com)
+	{
+		cout << "Наименьшая комиссия у 3-его продавца";
+	}
+	cout << endl; cout << endl;
+	
+	// Общая сумма вырученных денег
+	cout << "Общая сумма вырученных денег: " << seller1_sold + seller2_sold + seller3_sold << endl;
+	cout << "Общая сумма комиссионных денег: " << seller1_com + seller2_com + seller3_com << endl;
+	cout << "Общая сумма денег, прошедших через продавцов: " << seller1_sold + seller2_sold + seller3_sold + seller1_com + seller2_com + seller3_com;
+	return 0;
+}

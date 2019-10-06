@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+	int i, j;
+	string a[13][26];
+
+	for (i = 0; i < 13; i++)
+	{
+		for (j = 0; j < 26; j++)
+		{
+			a[i][j] = "-";
+		}
+	}
+
+	for (i = 0; i < 6; i++)
+	{
+		for (j = 0; j < 8; j++)
+		{
+			a[i][j] = "*";
+		}
+	}
+
+	for (i = 0; i < 13; i++)
+	{
+		for (j = 0; j < 26; j++)
+		{
+			cout << a[i][j];
+		}
+		cout << endl;
+	}
+	return 0;
+}

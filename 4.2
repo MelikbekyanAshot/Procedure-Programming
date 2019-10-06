@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+void signx(int x) {
+	if (x > 0)
+	{
+		cout << 1;
+	}
+	else if (x==0)
+	{
+		cout << 0;
+	}
+	else {
+		cout << -1;
+	}
+}
+
+int main() {
+	int x;
+	cout << "Enter x: ";
+	cin >> x;
+	signx(x);
+}

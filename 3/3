@@ -1,0 +1,21 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+int main() {
+	setlocale(LC_ALL, "ru");
+	ofstream fout;
+	fout.open("myFile.txt");
+	fout << "ТЕСТ";
+	fout.close();
+
+	ifstream fin;
+	fin.open("myFile.txt");
+	char ch;
+	while (fin.get(ch)) 
+	{
+		cout << ch;
+	}
+	return 0;
+}

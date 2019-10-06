@@ -1,0 +1,49 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+void rectangle(int a, int b) 
+{
+	cout << "Площадь прямоугольника равна " <<  a * b;
+}
+
+void triangle(int a, int b, int c) 
+{
+	double p;
+	p = (a + b + c) / 2;
+	cout << "Площадь фигуры равна " << sqrt(p * (p - a) * (p - b) * (p - c));
+}
+
+void circle(int r)
+{
+	cout << "Площадь фигуры равна " << 3.14 * r * r;
+}
+
+int main() {
+	setlocale(LC_ALL, "rus");
+	int figure;
+	double s, a, b, c, r, p;
+	cout << "1 - прямоугольник, 2 - треугольник, 3 - круг" << endl;
+	cout << "Введите название фигуры: ";
+	cin >> figure;
+	switch (figure)
+	{
+	case 1:
+		cout << "Введите a, b: " << endl;
+		cin >> a >> b;
+		rectangle(a, b);
+		break;
+	case 2:
+		cout << "Введите a, b, c: " << endl;
+		cin >> a >> b >> c;
+		triangle(a, b, c);
+		break;
+
+	case 3:
+		cout << "Введите r: ";
+		cin >> r;
+		circle(r);
+		break;
+
+	}
+}

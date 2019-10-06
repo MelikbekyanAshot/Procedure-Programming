@@ -1,0 +1,28 @@
+#include <iostream>
+#include<string>
+using namespace std;
+int main()
+{
+	char string[60], c;
+	int n, i, j;
+
+	cout << "Enter string: ";
+	cin >> string;
+	//  Пример строки для ввода kjhgfdsazxcvbnmqwertyuiolkjhbn
+	for (i = 0; i < 30; i++)
+	{
+		for (j = i + 1; j < 30; j++)
+		{
+			int  s = string[i] - string[j];
+
+			if (s > 0)
+			{
+				c = string[i];
+				string[i] = string[j];
+				string[j] = c;
+			}
+		}
+	}
+	cout << "Sorted string: " << string << endl;
+	return 0;
+}

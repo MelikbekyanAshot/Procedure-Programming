@@ -1,0 +1,29 @@
+#include <Windows.h>
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main(void)
+{
+	float x;
+	int z;
+	HDC hDC = GetDC(GetConsoleWindow());
+	HPEN Pen1 = CreatePen(PS_SOLID, 2, RGB(255, 0, 0)); // выбор толщины и цвета
+	SelectObject(hDC, Pen1); // выбор "инструмента"
+	MoveToEx(hDC, 650, 50, NULL); // начало отрезка
+	LineTo(hDC, 650, 650); // конец отрезка
+
+	HPEN Pen2 = CreatePen(PS_SOLID, 2, RGB(0, 255, 0));
+	SelectObject(hDC, Pen2);
+	MoveToEx(hDC, 50, 350, NULL);
+	LineTo(hDC, 1300, 350);
+
+	HPEN Pen3 = CreatePen(PS_SOLID, 2, RGB(0, 0, 255));
+	SelectObject(hDC, Pen3);
+	for (x = -16; x <= 16; x += 0.01) // (650, 350) - начало координат
+	{
+		MoveToEx(hDC, 30 * x + 650, -30 * sin(x) + 350, NULL);  // +-30 увеличивает график синуса, чтобы его было хорошо видно, +650/350 переносит в начало координат
+		LineTo(hDC, 30 * x + 650, -30 * sin(x) + 350);
+	}
+	return 0;
+}

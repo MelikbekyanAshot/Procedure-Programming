@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-#include <cstdlib>
 using namespace std;
 // ПРОГРАММА РАБОТАЕТ ТОЛЬКО ДО 10 СС, НУЖНО ДОДЕЛАТЬ ДО 16
 //Функция возвращает значения цифр в 16 СС

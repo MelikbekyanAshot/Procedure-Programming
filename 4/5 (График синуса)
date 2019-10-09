@@ -6,7 +6,6 @@ using namespace std;
 int main(void)
 {
 	float x;
-	int z;
 	HDC hDC = GetDC(GetConsoleWindow());
 	HPEN Pen1 = CreatePen(PS_SOLID, 2, RGB(255, 0, 0)); // выбор толщины и цвета
 	SelectObject(hDC, Pen1); // выбор "инструмента"

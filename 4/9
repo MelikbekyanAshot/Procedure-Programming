@@ -3,7 +3,7 @@
 #include <cmath>
 #include <cstdlib>
 using namespace std;
-
+// ПРОГРАММА РАЮОТАЕТ ТОЛЬКО ДО 10 СС, НУЖНО ДОДЕЛАТЬ ДО 16
 //Функция возвращает значения цифр в 16 СС
 int value(char cs_16)
 {

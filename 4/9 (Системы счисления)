@@ -1,26 +1,27 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <cstdlib>
 using namespace std;
-// ПРОГРАММА РАБОТАЕТ ТОЛЬКО ДО 10 СС, НУЖНО ДОДЕЛАТЬ ДО 16
+
 //Функция возвращает значения цифр в 16 СС
-int value(char cs_16)
+string value(char cs_16)
 {
 	switch (cs_16)
 	{
-	case 'A':return 10;
-	case 'B':return 11;
-	case 'C':return 12;
-	case 'D':return 13;
-	case 'E':return 14;
-	case 'F':return 15;
+	case 10:return "A";
+	case 11:return "B";
+	case 12:return "C";
+	case 13:return "D";
+	case 14:return "E";
+	case 15:return "F";
 	}
 }
 
 int main() {
 	setlocale(LC_ALL, "rus");
-	int old_number, old, old_basis, new_number, new_basis, number_10, i, len, t;
-	string str;
+	int old_number, old, old_basis, new_basis, number_10, i, len, t;
+	string new_number;
 	len = 0;
 	cout << "Введите исходное число: ";
 	cin >> old_number;
@@ -44,19 +45,22 @@ int main() {
 	}
 	cout << "Число в 10 СС: " << number_10 << endl;
 
-	//TODO написать перевод в int
-	new_number = 0;
-	str = "";
+	// переводим в новую СС. Создаем строчную переменную, рассматриваем каждый разряд, если получаем число >= 10 - используем функции value,
+	// иначе - просто находим остаток от деления. Затем используем reverse(), чтобы перевернуть строку (изначально строка перевернута, т. к. рассматривали с конца)
+	new_number = "";
 	while (number_10 > 0)
 	{
-		str = str + to_string(number_10 % new_basis);
+		if (number_10 % new_basis > 9)
+		{
+			new_number = new_number + value(number_10 % new_basis);
+		}
+		else
+		{
+			new_number = new_number + to_string(number_10 % new_basis);
+		}
 		number_10 /= new_basis;
 	}
-	reverse(str.begin(), str.end());
-	for (int i = 0; i < str.length(); i++) {
-		new_number = new_number * 10 + str[i] - 0x30;
-	}
-	reverse(str.begin(), str.end());
+	reverse(new_number.begin(), new_number.end());
 	cout << "Результат: " << new_number;
 	return 0;
 }

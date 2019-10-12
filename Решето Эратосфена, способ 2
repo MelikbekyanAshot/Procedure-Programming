@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	setlocale(LC_ALL, "ru");
+		int n, i, k, j;
+		cout << "Введите n: ";
+		cin >> n;
+    // объявляем массив, присваиваем всем элементам значение "истины"
+		bool *numbers = new bool[n + 1];
+		for (i = 2; i <= n; i++)
+		{
+			numbers[i] = true;
+		}
+		// присваиваем значение "ложь" тем элементам, индексы которых не являются простыми числами 
+		k = 2;
+		for (k = 2; k * k <= n; k++)
+		{
+			if (numbers[k] == true)
+			{
+				for (j = k * k; j <= n; j += k)
+				{
+					numbers[j] = false;
+				}
+			
+			}
+		}
+
+		cout << "Все простые числа до n: ";
+		for (i = 2; i <= n; i++)
+		{
+			if (numbers[i] == true)
+			{
+				cout << i << "\t";
+			}
+			
+		}
+}

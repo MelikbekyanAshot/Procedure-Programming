@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	setlocale(LC_ALL, "ru");
+	int n, i, k, j;
+	cout << "Введите n: ";
+	cin >> n;
+  // объявляем динамический массив
+	int *numbers = new int[n];
+  // заполняем массив
+	for (i = 2; i <= n; i++)
+	{
+		numbers[i] = i;
+	}
+	cout << "Все простые числа до n: ";
+  // во вложенном цикле мы по порядку обнуляем элементы, кратные 2, 3, 4 и т. д.
+  // выводятся только те числа, которые невозможно получить по формуле j = j + k, т. е. простые  
+	for (k = 2; k <= n; k++)
+	{
+		if (numbers[k] != 0)
+		{
+			cout << numbers[k] << "\t";
+			for (j = 2 * k; j <= n; j += k)
+			{
+				numbers[j] = 0;
+			}
+		}
+	}		
+}

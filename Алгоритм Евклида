@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+	setlocale(LC_ALL, "rus");
+	int a, b;
+	cout << "Введите a и b: ";
+	cin >> a >> b;
+	while (a != 0 && b != 0)
+	{
+		if (a >= b)
+		{
+			a -= b;
+		}
+		else {
+			b -= a;
+		}
+	}
+	cout << "НОД: " << a + b;
+}

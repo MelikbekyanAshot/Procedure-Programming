@@ -4,7 +4,7 @@ using namespace std;
 int main() {
 	setlocale(LC_ALL, "ru");
 	int n, i, k, j;
-	cout << "Введите n: ";
+	cout << "Введите n:  ";
 	cin >> n;
   // объявляем динамический массив
 	int *numbers = new int[n];

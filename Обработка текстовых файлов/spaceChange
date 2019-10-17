@@ -1,0 +1,39 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+//сделать ввод строки в файл
+int ascii_cod(char x)
+{
+	int a;
+	a = x;
+	return a;
+}
+
+int main() {
+	setlocale(LC_ALL, "ru");
+
+	ofstream fout;
+	fout.open("changeSpace.txt");
+	string str = "Программа меняет пробел на определенный символ";
+	fout << str << endl;
+
+	char c;
+	cout << "Введите символ, на который нужно заменить пробел: ";
+	cin >> c;
+	cout << endl;
+
+	ifstream fin;
+	fin.open("changeSpace.txt");
+	char ch;
+	while (fin.get(ch))
+	{
+		if (ch == 32) 
+		{
+			ch = ascii_cod(c);
+		}
+		fout << ch;
+		cout << ch;
+	}
+	fout.close();
+}

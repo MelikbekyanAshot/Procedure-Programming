@@ -1,0 +1,31 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int factorial(int x)
+{
+	int f = 1;
+	for (int i = 1; i <= x; i++)
+	{
+		f *= i;
+	}
+	return f;
+}
+
+int main()
+{
+	setlocale(LC_ALL, "rus");
+	int n, j = 1, dD = 6, d = 4, sum = 1;
+	double y = 0;
+	cout << "Введите n: ";
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		cout << "sum = " << sum << " d = " << d << " dD = "<< dD <<  endl;
+		y += factorial(n - i) / sqrt(sum);
+		sum += d;
+		d += dD;
+		dD += 3;
+	}
+	cout << "Ответ: " << y;
+}

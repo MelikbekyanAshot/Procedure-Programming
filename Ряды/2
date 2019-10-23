@@ -14,7 +14,7 @@ int factorial(int x)
 
 int main()
 {
-	setlocale(LC_ALL, "rus");
+	setlocale(LC_ALL, "ru");
 	int n, j = 1, dD = 6, d = 4, sum = 1;
 	double y = 0;
 	cout << "Введите n: ";

@@ -11,7 +11,7 @@ int ascii_cod(char x)
 }
 
 int main() {
-	setlocale(LC_ALL, "ru");
+	setlocale(LC_ALL, "rus");
 
 	ofstream fout;
 	fout.open("changeSpace.txt");

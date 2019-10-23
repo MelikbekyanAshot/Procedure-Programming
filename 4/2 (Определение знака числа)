@@ -4,20 +4,23 @@ using namespace std;
 void signx(int x) {
 	if (x > 0)
 	{
-		cout << 1;
+		return 1;
 	}
 	else if (x==0)
 	{
-		cout << 0;
+		return 0;
 	}
 	else {
-		cout << -1;
+		return -1;
 	}
 }
 
 int main() {
-	int x;
-	cout << "Enter x: ";
-	cin >> x;
-	signx(x);
+	setlocale(LC_ALL, "rus");
+	int a;
+	cout << "Введите число: ";
+	cin >> a;
+	cout << endl;
+	cout << signx(a);
+
 }

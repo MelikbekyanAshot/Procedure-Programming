@@ -20,8 +20,8 @@ string value(char cs_16)
 
 int main() {
 	setlocale(LC_ALL, "rus");
-	int old_number, old, old_basis, new_basis, number_10, i, len, t;
-	string new_number;
+	int old_basis, new_basis, number_10, i, len, t;
+	string new_number, oldNumber;
 	len = 0;
 	cout << "Введите исходное число: ";
 	cin >> old_number;

@@ -18,49 +18,52 @@ string value(char cs_16)
 	}
 }
 
+unsigned int char2int_(char chr)
+{
+	if (chr >= '0' && chr <= '9')
+		return chr - '0';
+	else if (chr >= 'A' && chr <= 'F')
+		return chr - 'A' + 10;
+	return -1;
+}
+
 int main() {
 	setlocale(LC_ALL, "rus");
-	int old_basis, new_basis, number_10, i, len, t;
-	string new_number, oldNumber;
+	int oldBasis = 16, newBasis = 10, number10, i, len, t;
+	string oldNumber, newNumber;
 	len = 0;
 	cout << "Введите исходное число: ";
-	cin >> old_number;
-	t = old_number;
+	cin >> oldNumber;
 	cout << "Введите исходное основание: ";
-	cin >> old_basis;
+	cin >> oldBasis;
 	cout << "Введите новое основание: ";
-	cin >> new_basis;
+	cin >> newBasis;
 	//Сначала переводим число в 10 СС, рассматриваем с конца
-	while (t > 0)
+	len = oldNumber.length();
+	number10 = 0;
+	for (i = len-1; i >= 0; i--)
 	{
-		t = t / 10;
-		len = len + 1;
+		number10 += char2int_(oldNumber[i]) * pow(16, len - i-1);
+		oldNumber = oldNumber.substr(0, oldNumber.length() - 1);
 	}
-	number_10 = 0;
-	for (i = len; i > 0; i--)
-	{
-		number_10 = number_10 + old_number % 10 * pow(old_basis, len - i);
-		old_number = old_number / 10;
-		
-	}
-	cout << "Число в 10 СС: " << number_10 << endl;
+	cout << "Число в 10 СС: " << number10 << endl;
 
 	// переводим в новую СС. Создаем строчную переменную, рассматриваем каждый разряд, если получаем число >= 10 - используем функции value,
 	// иначе - просто находим остаток от деления. Затем используем reverse(), чтобы перевернуть строку (изначально строка перевернута, т. к. рассматривали с конца)
-	new_number = "";
-	while (number_10 > 0)
+	newNumber = "";
+	while (number10 > 0)
 	{
-		if (number_10 % new_basis > 9)
+		if (number10 % newBasis > 9)
 		{
-			new_number = new_number + value(number_10 % new_basis);
+			newNumber = newNumber + value(number10 % newBasis);
 		}
 		else
 		{
-			new_number = new_number + to_string(number_10 % new_basis);
+			newNumber = newNumber + to_string(number10 % newBasis);
 		}
-		number_10 /= new_basis;
+		number10 /= newBasis;
 	}
-	reverse(new_number.begin(), new_number.end());
-	cout << "Результат: " << new_number;
+	reverse(newNumber.begin(), newNumber.end());
+	cout << "Число в новой СС: " << newNumber;
 	return 0;
 }

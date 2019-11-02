@@ -1,0 +1,130 @@
+#include <iostream>
+#include <ctime>
+using namespace std;
+
+// Функция проверяет, нет ли повторяющихся цифр в сгенерированном числе
+bool checkCompNum(int compNum)
+{
+	int a, b, c, d, sum = 0;
+	int tf[10] = { 0,0,0,0,0,0,0,0,0,0 };
+	a = compNum / 1000;
+	tf[a] = 1;
+	b = compNum / 100 % 10;
+	tf[b] = 1;
+	c = compNum % 100 / 10;
+	tf[c] = 1;
+	d = compNum % 10;
+	tf[d] = 1;
+	for (int i = 0; i < 10; i++)
+	{
+		sum += tf[i];
+	}
+	if (sum == 4)
+	{
+		return true; 
+	}
+	else
+	{
+		return false;
+	}
+}
+
+// Функция выводит массив из "+" и "-"
+void coutArr(string arr_)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		if (arr_[i] !=32)
+		{
+			cout << arr_[i] << " ";
+		}
+		
+	}
+}
+
+int main()
+{
+	setlocale(LC_ALL, "rus");
+	srand(time(0));
+	int compNum=0, userNum, len=1, a=0, b=0, c=0, d=0;
+	bool flag = false, flag2 = false;
+	while (flag != true)
+	{
+		compNum = rand();
+		a = compNum / 1000;
+		b = compNum / 100 % 10;
+		c = compNum % 100 / 10;
+		d = compNum % 10;
+		if (compNum >= 1000 && compNum <= 9999 && checkCompNum(compNum))
+		{
+			flag = true;
+		}
+	}
+	int compNumArr[4] = { a, b, c, d };
+	string answ = "   ";
+	cout << "Компьютер загадал число: " << compNum << endl;
+	cout << "Попробуйте отгадать число" << endl;
+	while (flag2!=true)
+	{
+		cout << "Введите число: ";
+		cin >> userNum;
+		//coutArr(checkUserNum(userNum, compNum));
+		
+		int a1, b1, c1, d1, a2, b2, c2, d2;
+		// Цифры в введенном числе
+		a1 = userNum / 1000;
+		b1 = userNum / 100 % 10;
+		c1 = userNum % 100 / 10;
+		d1 = userNum % 10;
+		// Цифры в сгенерированном числе
+		a2 = compNum / 1000;
+		b2 = compNum / 100 % 10;
+		c2 = compNum % 100 / 10;
+		d2 = compNum % 10;
+		// Поиск "быков" и "коров"
+		if (a1 == a2)
+		{
+			answ[0] = 43;
+		}
+		else if (a1 == b2 || a1 == c2 || a1 == d2)
+		{
+			answ[0] = 45;
+		}
+
+		if (b1 == b2)
+		{
+			answ[1] = 43;
+		}
+		else if (b1 == a2 || b1 == c2 || b1 == d2)
+		{
+			answ[1] = 45;
+		}
+
+		if (c1 == c2)
+		{
+			answ[2] = 43;
+		}
+		else if (c1 == b2 || c1 == a2 || c1 == d2)
+		{
+			answ[2] = 45;
+		}
+
+		if (d1 == d2)
+		{
+			answ[3] = 43;
+		}
+		else if (d1 == b2 || d1 == c2 || d1 == a2)
+		{
+			answ[3] = 45;
+		}
+
+		coutArr(answ);
+		if (answ[0] == 43 && answ[1] == 43 && answ[2] == 43 && answ[3] == 43)
+		{
+			flag2 = true;
+			cout << endl <<"Вы отгадали число!";
+		}
+		answ = "    ";
+		cout << endl;
+	}
+}

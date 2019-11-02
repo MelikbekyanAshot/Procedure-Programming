@@ -1,0 +1,28 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+void hanoi(int n, int start, int middle, int end)
+{
+	if (n == 1)
+	{
+		cout << start << "=>" << end << endl;
+	}
+	else
+	{
+		hanoi(n - 1, start, end, middle);
+		cout << start << "=>" << end << endl;
+		hanoi(n - 1, middle, start, end);
+	}
+}
+
+void main()
+{
+	setlocale(LC_ALL, "rus");
+	int n;
+	int start = 1, middle = 2, end = 3;
+	cout << "Введите n: ";
+	cin >> n;
+	cout << "Решение для n " << endl;
+	hanoi(n, start, middle, end);
+}

@@ -43,7 +43,7 @@ int main() {
 	number10 = 0;
 	for (i = len-1; i >= 0; i--)
 	{
-		number10 += char2int_(oldNumber[i]) * pow(16, len - i-1);
+		number10 += char2int_(oldNumber[i]) * pow(oldBasis, len - i-1);
 		oldNumber = oldNumber.substr(0, oldNumber.length() - 1);
 	}
 	cout << "Число в 10 СС: " << number10 << endl;

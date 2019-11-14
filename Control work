@@ -1,0 +1,117 @@
+#include <iostream>
+#include <tuple>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int spinner1(int A, int B, int C)
+{
+	int N;
+	N = (C - A) / B;
+	return N;
+}
+
+pair<int, int> spinner2(int bladeQuantity)
+{
+	int twoBladeQuantity = 0, threeBladeQuantity = 0;
+	for (int i = 0; i < bladeQuantity; i++)
+	{
+		for (int j = 0; j < bladeQuantity; j++)
+		{
+			if (i * 3 + j * 4 == bladeQuantity)
+			{
+				twoBladeQuantity = i; threeBladeQuantity = j;
+			}
+		}
+	}
+	return pair<int, int>(twoBladeQuantity, threeBladeQuantity);
+}
+
+int notAboutSpinners(int N, int M)
+{
+	int count = 0;
+
+	for (int x1 = 0; x1 < N; x1++)
+	{
+		for (int x2 = x1; x2 < N; x2++)
+		{
+			for (int y1 = 0; y1 < M; y1++)
+			{
+				for (int y2 = y1; y2 < M; y2++)
+				{
+					count++;
+				}
+			}
+		}
+	}
+
+	return count;
+}
+
+int coupeNumber(int seatNumber)
+{
+	if (seatNumber <= 36)
+	{
+		return (seatNumber - 1) / 4;
+	}
+	else
+	{
+		return (54 - seatNumber) / 2;
+	}
+}
+
+int main()
+{
+	setlocale(LC_ALL, "rus");
+
+	int A, B, C;
+	cout << "Задача 1. Спиннеры" << endl;
+	cout << "Введите стоимость основания, стоимость одной лопасти и максимальную стоимость всего спиннера: ";
+	cin >> A >> B >> C;
+	cout << "Максимальное количество лопастей: " << spinner1(A, B, C) << endl << endl;
+
+	int twoBladeSpinner, threeBladeSpinner, bladeQuantity;
+	cout << "Задача 2. Снова спиннеры" << endl;
+	cout << "Введите количество лопастей, которое есть у Дениса: ";
+	cin >> bladeQuantity;
+	auto p = spinner2(bladeQuantity);
+	cout << p.first << " " << p.second << endl << endl;
+
+	int N, M;
+	cout << "Задача 3. Не про спиннеры спиннеры" << endl;
+	cout << "Введите размер исходного листа: ";
+	cin >> N >> M;
+	cout << "Количество прямоугольников: " << notAboutSpinners(N, M) << endl << endl;
+
+	int freeSeatQuantity, seatNumber, coupe[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+	cout << "Плацкартный вагон" << endl;
+	cout << "Введите количество свободных мест: ";
+	cin >> freeSeatQuantity;
+	vector <int> arr(freeSeatQuantity);
+	for (int i = 0; i < freeSeatQuantity; i++)
+	{
+		cin >> arr[i];
+	}
+	for (int i = 0; i < freeSeatQuantity; i++)
+	{
+		coupe[coupeNumber(arr[i])] += 1;
+	}
+	int currentCoupeInRow = 0, finalCoupeInRow = 0;
+	for (int i = 0; i < 9; i++)
+	{
+		if (coupe[i] == 6)
+		{
+			currentCoupeInRow++;
+			finalCoupeInRow = max(finalCoupeInRow, currentCoupeInRow);
+		}
+		else
+		{
+			currentCoupeInRow = 0;
+		}
+	}
+	cout << "Наибольшее количество подряд идущих свободных купе: " << finalCoupeInRow << endl;
+
+
+
+	system("pause");
+}

@@ -48,6 +48,7 @@ int notAboutSpinners(int N, int M)
 	return count;
 }
 
+
 int coupeNumber(int seatNumber)
 {
 	if (seatNumber <= 36)
@@ -63,7 +64,7 @@ int coupeNumber(int seatNumber)
 int main()
 {
 	setlocale(LC_ALL, "rus");
-
+	
 	int A, B, C;
 	cout << "Задача 1. Спиннеры" << endl;
 	cout << "Введите стоимость основания, стоимость одной лопасти и максимальную стоимость всего спиннера: ";
@@ -84,7 +85,7 @@ int main()
 	cout << "Количество прямоугольников: " << notAboutSpinners(N, M) << endl << endl;
 
 	int freeSeatQuantity, seatNumber, coupe[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-	cout << "Плацкартный вагон" << endl;
+	cout << "Задача 4. Плацкартный вагон" << endl;
 	cout << "Введите количество свободных мест: ";
 	cin >> freeSeatQuantity;
 	vector <int> arr(freeSeatQuantity);
@@ -109,9 +110,29 @@ int main()
 			currentCoupeInRow = 0;
 		}
 	}
-	cout << "Наибольшее количество подряд идущих свободных купе: " << finalCoupeInRow << endl;
+	cout << "Наибольшее количество подряд идущих свободных купе: " << finalCoupeInRow << endl << endl;
+	
+	int N1, answ1 = 0, answ2 = 0;
+	cout << "Задача 5. Кинотеатр" << endl;
+	cout << "Введите количество свободных мест: ";
+	cin >> N1;
+	int K;
+	cout << "Введите количество школьников: ";
+	cin >> K;
 
-
-
+	for (int i = 0; i < K; i++)
+	{
+		answ1 = (N1 - 1) / 2;
+		answ2 = N1 - 1 - answ1;
+		if (N1 % 2 == 0)
+		{
+			N1 /= 2;
+		}
+		else
+		{
+			N1 = N1 / 2 + 2;
+		}
+	}
+	cout << "Мест с одной стороны " << answ1 << " , мест с другой стороны " << answ2 << endl;
 	system("pause");
 }

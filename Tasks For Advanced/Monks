@@ -1,0 +1,142 @@
+#include <iostream>
+using namespace std;
+int rows = 6;
+int cols = 4;
+int wow;
+
+void search(int monkNumber, int** dataCopy)
+{
+	while (monkNumber != 1) {
+		for (int i = 0; i < rows; i++) {
+			for (int j = 1; j < cols; j++)
+				if (dataCopy[i][j] == monkNumber) {
+					monkNumber = dataCopy[i][0];
+					cout << monkNumber << ", ";
+				}
+		}
+		search(monkNumber, dataCopy);
+	}
+}
+
+void search1(int monkNumber, int m, int** dataCopy)
+{
+	while (monkNumber != m)
+	{
+		if (monkNumber > m)
+		{
+			for (int i = 0; i < rows; i++)
+			{
+				for (int j = 1; j < cols; j++)
+					if (dataCopy[i][j] == monkNumber)
+					{
+						monkNumber = dataCopy[i][0];
+						cout << monkNumber << " ";
+						i = rows - 1;
+						j = cols - 1;
+					}
+			}
+		}
+		if (m > monkNumber)
+		{
+			for (int i = 0; i < rows; i++)
+			{
+				for (int j = 1; j < cols; j++)
+					if (dataCopy[i][j] == m)
+					{
+						m = dataCopy[i][0];
+						i = rows - 1;
+						j = cols - 1;
+					}
+			}
+		}
+	}
+	cout << "Общий учитель " << m;
+}
+
+int main()
+{
+	setlocale(LC_ALL, "russian");
+	bool isMonk = false, isMonk1 = false, isMonk2 = false;
+	int monk1, monk2, x, taskNumber, number;
+	int  data[6][4] =
+	{
+	{32,41,42,43},
+	{25,31,32,0},
+	{24,33,34,0},
+	{13,24,25,0},
+	{11,21,22,23},
+	{1,11,12,13}
+	};
+	int** k = new int* [rows];
+	for (int i = 0; i < rows; i++)
+	{
+		k[i] = new int[cols];
+	}
+
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			k[i][j] = data[i][j];
+		}
+	}
+
+	cout << "Выберите номер задания: 1 или 2? " << endl;
+	while (true)
+	{
+		cin >> taskNumber;
+		if (taskNumber == 1 || taskNumber == 2)
+		{
+			break;
+		}
+	}
+
+
+	if (taskNumber == 1)
+	{
+		cout << "Введите номер монаха: " << endl;
+		cin >> number;
+		for (int i = 0; i < rows; i++)
+		{
+			for (int j = 0; j < cols; j++)
+				if (k[i][j] == number)
+					isMonk = true;
+		}
+		if (isMonk)
+		{
+			cout << "Учителя: ";
+			search(number, k);
+		}
+		else
+			cout << number << " не монах" << endl;
+	}
+
+	else if (taskNumber == 2)
+	{
+		cout << "Номер первого монаха: " << endl;
+		cin >> monk1;
+		cout << "Номер второго монаха: ";
+		cin >> monk2;
+		for (int i = 0; i < rows; i++)
+		{
+			for (int j = 0; j < cols; j++)
+			{
+				if (k[i][j] == monk1)
+					isMonk1 = true;
+				if (k[i][j] == monk2)
+					isMonk2 = true;
+			}
+		}
+		if (isMonk1 && isMonk2)
+			search1(monk1, monk2, k);
+		else
+		{
+			if (!isMonk1)
+				cout << monk1 << " не монах" << endl;
+			if (!isMonk2)
+				cout << monk2 << " не монах" << endl;
+		}
+	}
+	delete[] k;
+	return 0;
+}

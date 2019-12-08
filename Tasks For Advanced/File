@@ -1,0 +1,184 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <cmath>
+#include <vector>
+using namespace std;
+
+int fact(int n)
+{
+	if (n < 0)
+		return (0);
+	if (n == 0)
+		return (1);
+	else
+		return n * fact(n - 1);
+}
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	string buffer;
+	string line;
+	ifstream myFile("File.txt");
+	ofstream output("output.txt");
+	output.open("output.txt", ios_base::app);
+	output << "Output: " << endl;
+	output.close();
+	if (myFile.is_open())
+	{
+		while (getline(myFile, line))
+		{
+			if (line[0] == '+')
+			{
+				vector <int> sum;
+				int res = 0;
+				line = line.erase(0, 2);
+				line += ' ';
+				while (line.length() > 0)
+				{
+					int len = 0;
+					while (line[len] != ' ')
+					{
+						len++;
+					}
+					buffer = line.substr(0, len);
+					sum.push_back(stoi(buffer));
+					line = line.erase(0, len + 1);
+					len = 0;
+					buffer = buffer.erase();
+				}
+
+				for (int i = 0; sum[i] != 0; i++)
+				{
+					res += sum[i];
+				}
+				output.open("output.txt", ios_base::app);
+				output << "Сложение: " << res << endl;
+				output.close();
+			}
+
+			if (line[0] == '*')
+			{
+				pair <int, int> multiply;
+				line = line.erase(0, 2);
+				line += ' ';
+				int len = 0;
+				while (line[len] != ' ')
+				{
+					len++;
+				}
+				multiply.first = stoi(line.substr(0, len));
+				line = line.erase(0, len + 1);
+				len = 0;
+				while (line[len] != ' ')
+				{
+					len++;
+				}
+				multiply.second = stoi(line.substr(0, len));
+
+				output.open("output.txt", ios_base::app);
+				output << "Произведение: " << multiply.first * multiply.second << endl;
+				output.close();
+			}
+
+			if (line[0] == '/')
+			{
+				line = line.erase(0, 2);
+				output.open("output.txt", ios_base::app);
+				double x = atof(line.c_str());
+				output << "Обратное число: " << 1 / x << endl;
+				output.close();
+			}
+
+			if (line[0] == '!')
+			{
+				line = line.erase(0, 2);
+				fact(stoi(line));
+				output.open("output.txt", ios_base::app);
+				output << "Факториал: " << fact(stoi(line)) << endl;
+				output.close();
+			}
+
+			if (line[0] == 'M')
+			{
+				vector <int> max;
+				line = line.erase(0, 2);
+				line += ' ';
+				int count = 0;
+				while (line.length() > 0)
+				{
+					int len = 0;
+					while (line[len] != ' ')
+					{
+						len++;
+					}
+					buffer = line.substr(0, len);
+					max.push_back(stoi(buffer));
+					count++;
+					line = line.erase(0, len + 1);
+					len = 0;
+					buffer = buffer.erase();
+				}
+				if (count < 5)
+				{
+					output.open("output.txt", ios_base::app);
+					output << "Поиск максимума из 5 чисел: " << "Найдено менее 5 чисел" << endl;
+					output.close();
+				}
+				else
+				{
+					int res = max[0];
+					for (int i = 1; i < 5; i++)
+					{
+						if (max[i] > res)
+						{
+							res = max[i];
+						}
+					}
+					output.open("output.txt", ios_base::app);
+					output << "Поиск максимума из 5 чисел: " << res << endl;
+					output.close();
+				}
+			}
+
+			if (line[0] == 'X')
+			{
+				vector <int> min;
+				line = line.erase(0, 2);
+				line += ' ';
+				while (line.length() > 0)
+				{
+					int len = 0;
+					while (line[len] != ' ')
+					{
+						len++;
+					}
+					buffer = line.substr(0, len);
+					min.push_back(stoi(buffer));
+					line = line.erase(0, len + 1);
+					len = 0;
+					buffer = buffer.erase();
+				}
+				
+				int res = min[0];
+				int minIndex = 0;
+				for (int i = 1; i < min.size(); i++)
+				{
+					if (min[i] < res)
+					{
+						res = min[i];
+						minIndex = i;
+					}
+				}
+				output.open("output.txt", ios_base::app);
+				output << "Поиск индекса наименьшего числа: " << minIndex + 1 << endl;
+				output.close();
+				
+			}
+		}
+	}
+	system("pause");
+}
+

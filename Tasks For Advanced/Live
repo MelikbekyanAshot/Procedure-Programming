@@ -1,0 +1,161 @@
+#include <iostream>
+#include <fstream>
+#include <ctime>
+using namespace std;
+
+int main()
+{
+
+	int neighbourCount[21][21], microLvl[21][21], genCount = 1, genNumber, aliveMicro = 0;
+	setlocale(LC_ALL, "ru");
+
+	srand(time(nullptr));
+
+	// Генерируем первое поколение
+	for (int i = 1; i < 21; i++)
+	{
+		for (int j = 1; j < 21; j++)
+		{
+			if (rand() % 10 < 5) // Вероятность появления микроба 50%
+			{
+				microLvl[i][j] = rand() % 11;
+			}
+		}
+	}
+
+	// Записываем в файл первое поколение
+	ofstream firstGen;
+	firstGen.open("firstGen.txt");
+	for (int i = 1; i < 21; i++)
+	{
+		for (int j = 1; j < 21; j++)
+		{
+			if (microLvl[i][j] > 0)
+			{
+				firstGen << "X";
+			}
+			else
+			{
+				firstGen << " ";
+			}
+		}
+		firstGen << "\n";
+	}
+	firstGen.close();
+
+	// Обнуляем массивов счетчиков соседей
+	for (int i = 0; i < 21; i++)
+	{
+		for (int j = 0; j < 21; j++)
+		{
+			neighbourCount[i][j] = 0;
+		}
+	}
+
+	// Вывод исходной матрицы
+	for (int i = 1; i < 21; i++)
+	{
+		for (int j = 1; j < 21; j++)
+		{
+			if (microLvl[i][j] > 0)
+			{
+				cout << 'X';
+				aliveMicro++; // Подсчет количества живых микробов
+			}
+			else
+			{
+				cout << ' ';
+			}
+		}
+		cout << endl;
+	}
+
+	cout << "__________________# " << genCount << endl;
+	// Обработка
+	cout << "Введите количество поколений: ";
+	cin >> genNumber;
+	for (int k = 0; k < genNumber-1 && aliveMicro > 0; k++) // Продолжаем генерацию поколений до тех пор, 
+															// пока не дойдем до введенного пользователем поколения 
+															// или пока не умрут все микробы
+	{
+		for (int i = 1; i < 21; i++)
+		{
+			for (int j = 1; j < 21; j++)
+			{
+				aliveMicro = 0;
+				// Считаем соседей каждого микроба
+				if (microLvl[i][j] > 0)
+				{
+					if (microLvl[i - 1][j] > 0) neighbourCount[i][j]++;
+					if (microLvl[i + 1][j] > 0) neighbourCount[i][j]++;
+					if (microLvl[i][j - 1] > 0) neighbourCount[i][j]++;
+					if (microLvl[i][j + 1] > 0) neighbourCount[i][j]++;
+					if (microLvl[i - 1][j - 1] > 0) neighbourCount[i][j]++;
+					if (microLvl[i + 1][j - 1] > 0) neighbourCount[i][j]++;
+					if (microLvl[i - 1][j + 1] > 0) neighbourCount[i][j]++;
+					if (microLvl[i + 1][j + 1] > 0) neighbourCount[i][j]++;
+				}
+
+				// Если у микроба 2 или 3 соседа - он продолжает жить,
+				if (neighbourCount[i][j] == 2 || neighbourCount[i][j] == 3)
+				{
+					microLvl[i][j]++;
+				}
+				// Иначе он умирает
+				else 
+				{
+					microLvl[i][j] = 0;
+				}
+			}
+		}
+
+		// Вывод нового поколения
+		for (int i = 1; i < 21; i++)
+		{
+			for (int j = 1; j < 21; j++)
+			{
+				if (microLvl[i][j] > 0 && microLvl[i][j] < 12)
+				{
+					cout << 'X';
+					aliveMicro++; // Подсчет количества живых микробов
+				}
+				else
+				{
+					cout << ' ';
+				}
+			}
+			cout << endl;
+		}
+
+		// Обнуляем количество соседей
+		for (int i = 1; i < 21; i++)
+		{
+			for (int j = 1; j < 21; j++)
+			{
+				neighbourCount[i][j] = 0;
+			}
+		}
+		cout << "___________________# " << ++genCount << endl;
+
+	}
+
+	// Записываем в файл последнее поколение
+	ofstream lastGen;
+	lastGen.open("lastGen.txt");
+	for (int i = 1; i < 21; i++)
+	{
+		for (int j = 1; j < 21; j++)
+		{
+			if (microLvl[i][j] > 0 && microLvl[i][j]-1 < 12)
+			{
+				lastGen << "X";
+			}
+			else
+			{
+				lastGen << " ";
+			}
+		}
+		lastGen << "\n";
+	}
+	lastGen.close();
+}

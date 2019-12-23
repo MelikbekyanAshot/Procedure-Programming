@@ -1,0 +1,34 @@
+'''C++
+#include <SFML/Graphics.hpp>
+#include <ctime>
+using namespace sf;
+
+int main()
+{
+	RenderWindow window(VideoMode(500, 1000), "Tetris!");
+	
+	Texture texture;
+	texture.loadFromFile("C:\\Users\\User\\Desktop\\Texture\\PNG\\blue_button07.png");
+
+	Sprite sprite(texture);
+
+	while (window.isOpen())
+	{
+		Event event;
+
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+				window.close();
+		}
+
+		window.clear(Color::White);
+
+		window.draw(sprite);
+
+		window.display();
+	}
+
+	return 0;
+}
+'''

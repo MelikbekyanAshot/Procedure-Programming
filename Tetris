@@ -2,10 +2,10 @@
 #include <ctime>
 using namespace sf;
 
-const int M = 20;
-const int N = 10;
-
-int field[M][N] = { 0 };
+//const int M = 20;
+//const int N = 10;
+//
+//int field[M][N] = { 0 };
 
 int figures[7][4] =
 {
@@ -25,19 +25,26 @@ struct Point
 
 int main()
 {
-	RenderWindow window(VideoMode(500, 1000), "Tetris!");
+	RenderWindow window(VideoMode(577, 1000), "Tetris!");
 
 	Texture texture;
 	texture.loadFromFile("C:\\Users\\User\\Desktop\\Texture\\PNG\\blue_button07.png");
 
 	Sprite sprite(texture);
 
+	int dx = 0;
+	bool rotate = 0;
+
+	float timer = 0, delay = 0.3;
+	Clock clock;
+
 	while (window.isOpen())
 	{
-		Event event;
+		float time = clock.getElapsedTime().asSeconds();
+		clock.restart();
+		timer += time;
 
-		int dx = 0;
-		bool rotate = 0;
+		Event event;
 
 		while (window.pollEvent(event))
 		{
@@ -51,6 +58,27 @@ int main()
 
 		for (int i = 0; i < 4; i++) a[i].x += dx;
 
+		if (rotate)
+		{
+			Point p = a[1];
+			for (int i = 0; i < 4; i++)
+			{
+				int x = a[i].y - p.y;
+				int y = a[i].x - p.x;
+				a[i].x = p.x - x;
+				a[i].y = p.y + y;
+			}
+		}
+
+		if (timer > delay)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				a[i].y += 1;
+			}
+			timer = 0;
+ 		}
+
 		int n = 3;
 
 		if (a[0].x == 0)
@@ -60,9 +88,10 @@ int main()
 				a[i].x = figures[n][i] % 2;
 				a[i].y = figures[n][i] / 2;
 			}
-		}
+		}  
 
 		dx = 0;
+		rotate = 0;
 
 		window.clear(Color::White);
 

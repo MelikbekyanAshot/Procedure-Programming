@@ -1,0 +1,206 @@
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <cmath>
+#include <sstream>
+
+using namespace sf;
+
+int main()
+{
+	RenderWindow window(VideoMode(800, 600), "Pong Game!");
+
+	bool up = false, down = false;
+	float leftPadSpeed = 0, rightPadSpeed = 0;
+	float xBallSpeed = -2, yBallSpeed = -2;
+	int leftScore = 0, rightScore = 0;
+
+	// Шрифт
+	Font font;
+	font.loadFromFile("RiseofKingdom.ttf");
+
+	// Счет
+	Text score;
+	score.setFont(font);
+	score.setCharacterSize(30);
+	score.setPosition(370, 20);
+	score.setString("0 : 0");
+
+	// Текстуры
+	Texture textureBackground;
+	textureBackground.loadFromFile("background.png");
+
+	RectangleShape background;
+	background.setSize(Vector2f(800, 600));
+	background.setPosition(0, 0);
+	background.setTexture(&textureBackground);
+
+	Texture textureLeftPad;
+	textureLeftPad.loadFromFile("blue.png");
+
+	RectangleShape leftPad;
+	leftPad.setSize(Vector2f(56, 153));
+	leftPad.setOrigin(28, 77);
+	leftPad.setPosition(25, 300);
+	leftPad.setTexture(&textureLeftPad);
+
+	Texture textureRightPad;
+	textureRightPad.loadFromFile("red.png");
+
+	RectangleShape rightPad;
+	rightPad.setSize(Vector2f(55, 151));
+	rightPad.setOrigin(27, 75);
+	rightPad.setPosition(700, 200);
+	rightPad.setTexture(&textureRightPad);
+
+	CircleShape ball;
+	ball.setRadius(15);
+	ball.setOrigin(15, 15);
+	ball.setFillColor(Color(0, 255, 0));
+	ball.setPosition(400, 300);
+
+	while (window.isOpen())
+	{
+		Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == Event::Closed)
+			{
+				window.close();
+			}
+
+			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Up)
+			{
+				up = true;
+			}
+
+			if (event.type == Event::KeyPressed && event.key.code == Keyboard::Down)
+			{
+				down = true;
+			}
+
+			if (event.type == Event::KeyReleased && event.key.code == Keyboard::Up)
+			{
+				up = false;
+			}
+
+			if (event.type == Event::KeyReleased && event.key.code == Keyboard::Down)
+			{
+				down = false;
+			}
+		}
+		
+
+		// Левая ракетка
+		if (up == true)
+		{
+			leftPadSpeed = -1;
+		}
+		if (down == true)
+		{
+			leftPadSpeed = 1;
+		}
+		
+		if (leftPad.getPosition().y < 56)
+		{
+			leftPad.setPosition(25, 60);
+		}
+		if (leftPad.getPosition().y > 550)
+		{
+			leftPad.setPosition(25, 545);
+		}
+
+		if ((up == true && down == true) || (up == false && down == false))
+		{
+			leftPadSpeed = 0;
+		}
+
+		leftPad.move(0, leftPadSpeed);
+
+
+		// Правая ракетка
+		if (ball.getPosition().y < rightPad.getPosition().y)
+		{
+			rightPadSpeed = -1;
+		}
+
+		if (ball.getPosition().y > rightPad.getPosition().y)
+		{
+			rightPadSpeed = 1;
+		}
+
+		if (rightPad.getPosition().y < 55)
+		{
+			rightPad.setPosition(700, 60);
+		}
+		if (rightPad.getPosition().y > 550)
+		{
+			rightPad.setPosition(700, 545);
+		}
+
+		rightPad.move(0, rightPadSpeed);
+
+
+		// Мяч		
+		if (ball.getPosition().y < 0)
+		{
+			yBallSpeed = -yBallSpeed;
+		}
+		if (ball.getPosition().y > 600)
+		{
+			yBallSpeed = -yBallSpeed;
+		}
+
+		if (ball.getGlobalBounds().intersects(leftPad.getGlobalBounds()) && (ball.getPosition().x > 50 || ball.getPosition().x < 700))
+		{
+			xBallSpeed = -xBallSpeed;
+			if (leftPad.getPosition().y < ball.getPosition().y)
+			{
+				if (abs(yBallSpeed) < 2)
+				{
+					yBallSpeed = -2*yBallSpeed;
+				}	
+			}
+			if (leftPad.getPosition().y > ball.getPosition().y)
+			{
+				if (abs(yBallSpeed) < 2)
+				{
+					yBallSpeed = -0.5*yBallSpeed;
+				}
+			}
+		}
+		if (ball.getGlobalBounds().intersects(rightPad.getGlobalBounds()))
+		{
+			xBallSpeed = -xBallSpeed;
+		}
+		std::cout << "Coord = " << ball.getPosition().x << " " << ball.getPosition().y << "\n";
+
+		// Считаем очки
+		if (ball.getPosition().x < 56)
+		{
+			rightScore++;
+			ball.setPosition(400, 300);
+			xBallSpeed = -1;
+		}
+		if (ball.getPosition().x > 800)
+		{
+			leftScore++;
+			ball.setPosition(400, 300);
+			xBallSpeed = 1;
+		}
+		ball.move(xBallSpeed, yBallSpeed);
+
+		window.clear();
+		window.draw(background);		
+		window.draw(leftPad);
+		window.draw(rightPad);
+		window.draw(ball);
+		std::stringstream res;
+		res << leftScore << " : " << rightScore;
+		score.setString(res.str());
+		window.draw(score);
+		window.display();
+		
+	}
+	
+	return 0;
+}
